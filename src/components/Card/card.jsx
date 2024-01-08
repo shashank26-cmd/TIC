@@ -10,8 +10,8 @@ function Card({ gameEnd,player,onPlay,index }){
 
     }
     return(
-        <div className='card' onClick={() => !gameEnd && player=="" && onPlay(index)}>{icon}
-        </div>
+        <div className='card' onClick={() => !gameEnd && player=="" && onPlay(index)}>{icon} 
+        </div> //if gamend nhi hua hai and player string empty hai tabhi onplay hona chahiye;
     )
 }
 export default Card;

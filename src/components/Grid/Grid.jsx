@@ -1,10 +1,9 @@
-import  { useState } from "react";
+import { useState } from "react";
 import Card from "../Card/card";
 import isWinner from "../../helper/checkWinner";
 import './Grid.css';
 
-function Grid({numberOfCards}) {
-    // Define the number of cards as needed
+function Grid({ numberOfCards }) {
     const [board, setBoard] = useState(Array(numberOfCards).fill(""));
     const [turn, setTurn] = useState(true); // true = "0", false = "X"
     const [winner, setWinner] = useState(null);
@@ -18,9 +17,12 @@ function Grid({numberOfCards}) {
         const win = isWinner(board, turn ? "0" : "X");
         if (win) {
             setWinner(win);
+        } else if (board.every(cell => cell !== "")) {
+            // If the board is full and no winner, it's a tie
+            setWinner("Tie");
         }
-        setBoard([...board]);// board update
-        setTurn(!turn);// turn update
+        setBoard([...board]);
+        setTurn(!turn);
     }
 
     function reset() {
@@ -33,7 +35,11 @@ function Grid({numberOfCards}) {
         <div className="grid-wrapper">
             {winner && (
                 <>
-                    <h1 className="turn-highlight">Winner is {winner}</h1>
+                    {winner !== "Tie" ? (
+                        <h1 className="turn-highlight">Winner is {winner}</h1>
+                    ) : (
+                        <h1 className="turn-highlight">It's a Tie!</h1>
+                    )}
                     <button className="reset" onClick={reset}>Reset game</button>
                 </>
             )}
